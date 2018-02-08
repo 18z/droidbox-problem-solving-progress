@@ -2,10 +2,20 @@
 
 ### JH 問題描述
 ```
-I want to get more apk logs(network, SMS, leakage, read/write behavior) by executing ./droidbox.sh XXX.apk, but the terminal always shown "collect 0 sandbox" and get only static result.(such as hash value, Broadcast receivers, Enforced permissions) The droidbox.sh will execute droidbox.py, so I trace the code of droidbox.py and figure out in line 267 "logcatInput = sys.stdin.readline()", which is an empty value ....
+I want to get more apk logs(network, SMS, leakage, read/write behavior) by executing ./droidbox.sh XXX.apk, 
+but the terminal always shown "collect 0 sandbox" and get only static result.
+(such as hash value, Broadcast receivers, Enforced permissions) 
+The droidbox.sh will execute droidbox.py, 
+so I trace the code of droidbox.py and figure out in line 267 "logcatInput = sys.stdin.readline()", 
+which is an empty value ....
 
-As above description, how can I get correct result of logcatInput, then I can obtain fully information. The step I've executed as follows: 1. launch the emulator by executing
-emulator -avd test (test is name of emulator) 2. Then typing ./droidbox.sh com.kingroot.kinguser.apk to launch the app and monkeyrunner
+As above description, how can I get correct result of logcatInput, 
+then I can obtain fully information. 
+
+The step I've executed as follows: 
+
+1. launch the emulator by executing emulator -avd test (test is name of emulator) 
+2. Then typing ./droidbox.sh com.kingroot.kinguser.apk to launch the app and monkeyrunner
 
 The code is on github as follow:
 
@@ -13,7 +23,9 @@ https://github.com/pjlantz/droidbox/blob/master/external/droidbox.py
 
 execution result : collected 0 sandbox logs (Ctrl-C to view logs)
 
-Waiting for the device...box logs (Ctrl-C to view logs) device : Installing the application com.kingroot.kinguser.apk... collected 0 sandbox logs (Ctrl-C to view logs) [*] Collected 0 sandbox logs
+Waiting for the device...box logs (Ctrl-C to view logs) device : 
+Installing the application com.kingroot.kinguser.apk... 
+collected 0 sandbox logs (Ctrl-C to view logs) [*] Collected 0 sandbox logs
 
 
  [Info]
