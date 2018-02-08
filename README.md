@@ -16,6 +16,14 @@ JH: The droidbox.sh will execute droidbox.py,
 KYC: 
     droidbox.sh -> droidbox.py -> line 267
     可以把 droidbox.py 裡面 你鎖定到 line 267 的過程詳細描述嗎？
+JH: 我將原先line 247 的 call(['adb', 'logcat', '-c'])
+    更改為 adb = Popen(["adb", "logcat", "ActivityManager:I *:S"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    將原先 line 267 的 logcatInput = sys.stdin.readline()
+    更改為 logcatInput = adb.stdout.readline()
+    讓這個shell所產生出來的log可以藉由adb.stdout產生出來，提供 line 267 讀取每一行log
+    於 line 270 的 boxlog = logcatInput.split('DroidBox:') 取出 DroidBox 啟動後的所有log資訊，並針對所產生出來的log進行分類
+    網路上有使用droidbox的討論都是以此手法進行，但我發現這跑出來的log都不是我預期的資料，亦即原程式抓不到需要分類的項目名稱        (DexClassLoader,ServiceStart,RecvNet,FdAccess,FileRW,OpenNet,CloseNet,SendNet,DataLeak,SendSMS,PhoneCall,CryptoUsage)
+    因此導致我輸入ctrl+C 結束程式時，上述這些項目類型的資料皆為空值，僅顯示（Info，Broadcast receivers，Enforced permissions）等靜態資料
 
 JH: The step I've executed as follows: 
     1. launch the emulator by executing emulator -avd test (test is name of emulator) 
@@ -23,8 +31,10 @@ JH: The step I've executed as follows:
     
 KYC: 
     有無可能 emulator 太舊或太新，不支援 APK 版本？
-```
-
+``` 不同的 APK 需要使用可支援其規格的 emulator 進行運作，目前都是使用我開啟的 emulator 可以順利安裝上來的 APK 進行分析，
+    使用 adb install *.apk 皆可以正確的將 APK 安裝到 emulator 上， 也能在 emulator 上對此 APK 進行操作 （更新，下載東西等資料存取或網路行為）
+    若我開始操作 APK 並且在 terminal 同時執行 adb logcat， 會持續不斷的跳出 log， 但這些 log 都不是我目前需要的資訊（需要抓到 DroidBox 的 log ） 
+    因此初步判定應該不是 emulator 版本問題， 對此我感到疑惑， 為何抓不到 DroidBox 的 log 資訊
 ```
  [Info]
  ------
